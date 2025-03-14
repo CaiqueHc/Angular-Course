@@ -5,7 +5,14 @@
 <app-header />
 <main>
     <ul id="users">
+
+        @for (user of users; track user.id) {
         <li>
+            <app-users [user]="user" [selected]="user.id === selectedUserId" (select)="onSelectUser($event)" />
+        </li>
+        }
+
+        <!-- <li>
             <app-users [id]="users[0].id" [avatar]="users[0].avatar" [name]="users[0].name"
                 (select)="onSelectUser($event)" />
         </li>
@@ -28,7 +35,12 @@
         <li>
             <app-users [id]="users[5].id" [avatar]="users[5].avatar" [name]="users[5].name"
                 (select)="onSelectUser($event)" />
-        </li>
+        </li> -->
     </ul>
-    <app-tasks [name]="selectedUser.name"/>
+    @if (selectedUser) {
+        <app-tasks [userId]="selectedUser.id" [name]="selectedUser.name" />
+    } @else {
+        <p id="fallback">Select a user to see their tasks!</p>
+    }
+
 </main>
